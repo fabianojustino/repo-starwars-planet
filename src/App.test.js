@@ -98,7 +98,7 @@ describe('2 - Filtre a tabela através de um texto, inserido num *campo de texto
   const ROWS_WITH_LETTER_O = 8;
   const ROWS_WITH_LETTERS_OO = 3;
 
-  it('Renderize o campo de texto para o filtro de nomes', async () => {
+  it.only('Renderize o campo de texto para o filtro de nomes', async () => {
     await act(async () => {
       render(<App />);
     });

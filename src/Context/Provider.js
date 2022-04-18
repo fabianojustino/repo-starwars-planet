@@ -6,6 +6,7 @@ import getPlanetsApi from '../services/requestApi';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [labels, setLabel] = useState([]);
+  const [filterByName, setFilterByName] = useState({ name: '' });
   useEffect(() => {
     getPlanetsApi()
       .then(({ results }) => {
@@ -23,9 +24,15 @@ function Provider({ children }) {
       });
   }, []);
 
+  const saveSearchName = (name) => {
+    setFilterByName({ name });
+  };
+
   const context = {
     data,
     labels,
+    filterByName,
+    saveSearchName,
   };
 
   return (
