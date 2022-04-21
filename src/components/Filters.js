@@ -4,7 +4,7 @@ import Button from './Button';
 
 export default function Filters() {
   // const [column, setColumn] = useState('');
-  const { filterByNumericValues } = useContext(Context);
+  const { filterByNumericValues, removeOneFilter } = useContext(Context);
 
   return (
     <section>
@@ -13,18 +13,23 @@ export default function Filters() {
         filterByNumericValues.map((e, index) => (
 
           <div key={ index } className="filter__container">
-            <p>{(Object.values(e).join(' '))}</p>
-
-            <Button
-              label="Filtrar"
-              type="button"
-              onClick={ () => ({}) }
-              disabled={ false }
-              data-testid="button-filter"
-              value=""
-              className=""
-              img=""
-            />
+            <span
+              aria-hidden="true"
+              data-testid="filter"
+              onClick={ () => removeOneFilter(e.column) }
+            >
+              { (Object.values(e).join(' ')) }
+              <Button
+                label="x"
+                type="button"
+                onClick={ () => { } }
+                disabled={ false }
+                id=""
+                value=""
+                className=""
+                img=""
+              />
+            </span>
           </div>
 
         ))

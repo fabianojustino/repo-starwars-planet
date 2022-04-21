@@ -25,7 +25,7 @@ function Provider({ children }) {
         setData(results);
         // Salva apenas os rótulos do primeiro objeto, para ser usado na <Table>
         const marks = Object.keys(results[0]);
-        setLabel(marks);
+        setLabel(marks); // referente ao thead da tabela em <Table>
       })
       .catch((error) => {
         console.log(error);
@@ -48,13 +48,24 @@ function Provider({ children }) {
       setNumericDisabled(false);
     }
 
-    if (result.value === '') {
-      result.value = 0;
-    }
-
     const resultFilterColumn = columns.filter((e) => e !== result.column);
     setColumns(resultFilterColumn);
     setFilterByNumericValues((prev) => [...prev, result]);
+  };
+
+  // Remove os filtros já aplicados, ao clicar na lixeira
+  const removeOneFilter = (column) => {
+    console.log(column);
+    const resultFilterColumn = filterByNumericValues.filter((e) => e.column !== column);
+    // devolve a opção removida ao dropDown de filtros
+    setColumns((prev) => [...prev, column]);
+    // atualiza o array de filtros com base no último filtro removido
+    setFilterByNumericValues(resultFilterColumn);
+  };
+
+  // remove todos os filtros aplicados
+  const removeAllFilters = () => {
+    setFilterByNumericValues([]);
   };
 
   const context = {
@@ -66,6 +77,8 @@ function Provider({ children }) {
     saveSearchName,
     columns,
     saveFilterColumn,
+    removeOneFilter,
+    removeAllFilters,
   };
 
   return (

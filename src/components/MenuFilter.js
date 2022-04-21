@@ -8,7 +8,12 @@ export default function MenuFilter() {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('0');
-  const { columns, isNumericDisabled, saveFilterColumn } = useContext(Context);
+  const {
+    columns,
+    isNumericDisabled,
+    saveFilterColumn,
+    removeAllFilters,
+  } = useContext(Context);
 
   const saveFilterNumeric = () => {
     const filterOne = {
@@ -42,7 +47,7 @@ export default function MenuFilter() {
         placeholder=""
         type="number"
         onChange={ (e) => setValue(e.target.value) }
-        value={ value }
+        value={ value === '' ? '0' : value }
         name="number"
         id="value-filter"
       />
@@ -52,6 +57,16 @@ export default function MenuFilter() {
         onClick={ () => saveFilterNumeric() }
         disabled={ isNumericDisabled }
         id="button-filter"
+        value=""
+        className=""
+        img=""
+      />
+      <Button
+        label="REMOVER FILTROS"
+        type="button"
+        onClick={ () => removeAllFilters() }
+        disabled={ isNumericDisabled }
+        id="button-remove-filters"
         value=""
         className=""
         img=""
