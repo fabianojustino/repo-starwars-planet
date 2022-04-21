@@ -24,10 +24,14 @@ class Select extends Component {
           onChange={ onChange }
           value={ value }
         >
-          {/*   <option value={ defaultValue }>{ defaultOption }</option> */}
+          {/*  <option value="none">Selecione</option> */}
           {
             options.map((option, index) => (
-              <option key={ index }>{ option }</option>
+              <option
+                key={ index }
+              >
+                { option }
+              </option>
             ))
           }
         </select>

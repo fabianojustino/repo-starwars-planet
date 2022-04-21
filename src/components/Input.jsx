@@ -15,6 +15,7 @@ class Input extends Component {
           onChange={ onChange }
           placeholder={ placeholder }
           data-testid={ id }
+          min={ 0 }
         />
       </label>
     );

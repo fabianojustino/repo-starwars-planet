@@ -6,7 +6,15 @@ import getPlanetsApi from '../services/requestApi';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [labels, setLabel] = useState([]);
+  const [isNumericDisabled, setNumericDisabled] = useState(false);
+  const [columns, setColumns] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
+  const [filterByNumericValues, setFilterByNumericValues] = useState([
+
+  ]);
   const [filterByName, setFilterByName] = useState({ name: '' });
+
   useEffect(() => {
     getPlanetsApi()
       .then(({ results }) => {
@@ -24,15 +32,40 @@ function Provider({ children }) {
       });
   }, []);
 
+  // useEffect(() => filter(), [filterByNumericValues]);
+
   const saveSearchName = (name) => {
     setFilterByName({ name });
+  };
+
+  // Remove o item selecionado do dropdown column e adiciona o item na tabela de filtros
+  const saveFilterColumn = (result) => {
+    if (columns.length === 1) {
+      // Desabilita o botao de filtrar numerico
+      setNumericDisabled(true);
+    } else {
+      // habilita o botao de filtrar numerico
+      setNumericDisabled(false);
+    }
+
+    if (result.value === '') {
+      result.value = 0;
+    }
+
+    const resultFilterColumn = columns.filter((e) => e !== result.column);
+    setColumns(resultFilterColumn);
+    setFilterByNumericValues((prev) => [...prev, result]);
   };
 
   const context = {
     data,
     labels,
     filterByName,
+    isNumericDisabled,
+    filterByNumericValues,
     saveSearchName,
+    columns,
+    saveFilterColumn,
   };
 
   return (
