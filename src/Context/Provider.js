@@ -5,15 +5,15 @@ import getPlanetsApi from '../services/requestApi';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [filterByName, setFilterByName] = useState({ name: '' });
   const [labels, setLabel] = useState([]);
   const [isNumericDisabled, setNumericDisabled] = useState(false);
   const [columns, setColumns] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ]);
-  const [filterByNumericValues, setFilterByNumericValues] = useState([
-
-  ]);
-  const [filterByName, setFilterByName] = useState({ name: '' });
+  const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+  const [order, setOrder] = useState({ column: 'name', sort: 'DESC' });
+  const [orderIsActive, setOrderActive] = useState(false);
 
   useEffect(() => {
     getPlanetsApi()
@@ -22,6 +22,7 @@ function Provider({ children }) {
           // Deleta a chave residentes dos retorno da API
           delete e.residents;
         });
+        // Coloca em Ordem crescente ou descrecente
         setData(results);
         // Salva apenas os rótulos do primeiro objeto, para ser usado na <Table>
         const marks = Object.keys(results[0]);
@@ -66,6 +67,13 @@ function Provider({ children }) {
   // remove todos os filtros aplicados
   const removeAllFilters = () => {
     setFilterByNumericValues([]);
+    setOrderActive(false);
+  };
+
+  // salva a escolha de ordem (asc/desc) do usuário por coluna (population, etc)
+  const saveOrder = (choice) => {
+    setOrder(choice);
+    setOrderActive(true);
   };
 
   const context = {
@@ -79,6 +87,10 @@ function Provider({ children }) {
     saveFilterColumn,
     removeOneFilter,
     removeAllFilters,
+    order,
+    orderIsActive,
+    setOrder,
+    saveOrder,
   };
 
   return (

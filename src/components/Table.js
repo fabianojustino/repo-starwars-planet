@@ -5,8 +5,42 @@ function Table() {
   const { labels,
     data,
     filterByName,
-    filterByNumericValues: filterN } = useContext(Context);
+    filterByNumericValues: filterN,
+    order,
+    orderIsActive,
+  } = useContext(Context);
   const { name: searchName } = filterByName;
+
+  // campos usados na ordenacao de campos numericos
+  const fieldOrder = order.column;
+  const orderFilter = order.sort;
+
+  function compare(a, b) {
+    if (orderFilter === 'ASC') {
+      return (Number(a[fieldOrder]) - Number(b[fieldOrder]));
+    }
+    return (Number(b[fieldOrder]) - Number(a[fieldOrder]));
+  }
+
+  let dataPlanet;
+  if (orderIsActive) {
+    // por filtro numerico
+    // array sem os objetos com o campo unknwon
+    const outUnknown = data.filter((e) => e[fieldOrder] !== 'unknown');
+    // Dados somente com objetos que possuem o campo unknwon
+    const unknowns = data.filter((e) => e[fieldOrder] === 'unknown');
+    // Coloca em ordem os numeros e une com os objetos que possuem unknowns
+    dataPlanet = [...outUnknown.sort(compare), ...unknowns];
+  } else {
+    // filtro por nome
+    dataPlanet = data.sort((a, b) => {
+      const meno1 = -1;
+      if (a.name < b.name) {
+        return meno1;
+      }
+      return true;
+    });
+  }
 
   // reference: https://dev.to/lukyhenson/substitua-sua-instrucao-switch-e-varios-if-and-else-usando-object-literals-pt-br-4po9
   function filterSome(type, coluna, value) {
@@ -19,7 +53,7 @@ function Table() {
     return (filter[type] || filter.default)();
   }
 
-  const filter = (planet) => {
+  const filterItems = (planet) => {
     const results = filterN.map(({ column, comparison, value }) => {
       const result = filterSome(comparison, planet[column], value);
       return result;
@@ -41,9 +75,9 @@ function Table() {
       return results.every((e) => e === true);
     };
    */
-  const filterData = data
+  const filterData = dataPlanet
     .filter((planet) => planet.name.toLowerCase().includes((searchName).toLowerCase())
-      && filter(planet));
+      && filterItems(planet));
 
   return (
     <table style={ { border: '1px solid black' } }>
@@ -74,7 +108,7 @@ function Table() {
             }, index,
           ) => (
             <tr key={ index }>
-              <td>
+              <td data-testid="planet-name">
                 { name }
               </td>
               <td>

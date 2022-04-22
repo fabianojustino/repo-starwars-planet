@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuFilter from './components/MenuFilter';
+import MenuNumeric from './components/MenuNumeric';
 import Header from './components/Header';
 import Table from './components/Table';
 import Provider from './Context/Provider';
@@ -9,7 +9,7 @@ function App() {
   return (
     <Provider>
       <Header />
-      <MenuFilter />
+      <MenuNumeric />
       <Filters />
       <Table />
     </Provider>

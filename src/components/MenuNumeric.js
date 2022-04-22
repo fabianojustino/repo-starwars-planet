@@ -3,8 +3,9 @@ import Context from '../Context/Context';
 import Select from './Select';
 import Button from './Button';
 import Input from './Input';
+import MenuOrder from './MenuOrder';
 
-export default function MenuFilter() {
+export default function MenuNumeric() {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('0');
@@ -71,6 +72,7 @@ export default function MenuFilter() {
         className=""
         img=""
       />
+      <MenuOrder />
     </section>
     // ---------------____FILTERS
   );
