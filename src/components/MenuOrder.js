@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import Context from '../Context/Context';
 import Select from './Select';
 import Button from './Button';
+import styles from '../styles/filter.module.css';
 
 export default function MenuOrder() {
   const [column, setColumn] = useState('population');
@@ -21,7 +22,7 @@ export default function MenuOrder() {
   };
 
   return (
-    <section>
+    <section className={ styles.order__container }>
       <Select
         label="Ordenar"
         onChange={ (e) => setColumn(e.target.value) }
@@ -36,6 +37,7 @@ export default function MenuOrder() {
           type="radio"
           value="ASC"
           name="order"
+          id="asc"
           data-testid="column-sort-input-asc"
           onChange={ (e) => setSort(e.target.value) }
         />
@@ -45,6 +47,7 @@ export default function MenuOrder() {
         <input
           type="radio"
           value="DESC"
+          id="desc"
           name="order"
           data-testid="column-sort-input-desc"
           onChange={ (e) => setSort(e.target.value) }
@@ -52,13 +55,13 @@ export default function MenuOrder() {
         Descendente
       </label>
       <Button
-        label="Filtrar"
+        label="Ordenar"
         type="button"
         onClick={ () => saveFilterOrder() }
         disabled={ false }
         id="column-sort-button"
         value=""
-        className=""
+        className={ styles.btn__filter }
         img=""
       />
     </section>

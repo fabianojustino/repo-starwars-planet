@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import Context from '../Context/Context';
 import Input from './Input';
+import styles from '../styles/header.module.css';
 
 export default function Header() {
   const [search, setSearch] = useState('');
@@ -13,11 +14,11 @@ export default function Header() {
     saveSearchName(value);
   }
   return (
-    <section>
+    <header>
 
-      <h1>Projeto Star Wars - Trybe</h1>
+      <h1 className={ styles.title__site }>Star Wars</h1>
       <Input
-        placeholder="search"
+        placeholder="Digite o nome de um planeta"
         type="text"
         onChange={ (e) => setSearchName(e) }
         value={ search }
@@ -26,7 +27,7 @@ export default function Header() {
         required
       />
 
-    </section>
+    </header>
 
   );
 }

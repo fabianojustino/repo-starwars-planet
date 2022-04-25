@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Context from '../Context/Context';
 import Select from './Select';
 import Button from './Button';
 import Input from './Input';
-import MenuOrder from './MenuOrder';
+import styles from '../styles/filter.module.css';
 
 export default function MenuNumeric() {
   const [column, setColumn] = useState('population');
@@ -14,7 +14,15 @@ export default function MenuNumeric() {
     isNumericDisabled,
     saveFilterColumn,
     removeAllFilters,
+    filterByNumericValues,
   } = useContext(Context);
+
+  // seta o select de label coluna com o primeiro valor do array de busca
+  useEffect(() => {
+    if (columns.length > 0) {
+      setColumn(columns[0]);
+    }
+  }, [filterByNumericValues, columns]);
 
   const saveFilterNumeric = () => {
     const filterOne = {
@@ -26,7 +34,7 @@ export default function MenuNumeric() {
   };
 
   return (
-    <section>
+    <section className={ styles.numeric__container }>
       <Select
         label="Coluna"
         onChange={ (e) => setColumn(e.target.value) }
@@ -36,22 +44,24 @@ export default function MenuNumeric() {
         defaultValue={ column }
         options={ columns }
       />
-      <Select
-        label="Operador"
-        onChange={ (e) => setComparison(e.target.value) }
-        value={ comparison }
-        name="operator"
-        id="comparison-filter"
-        options={ ['maior que', 'menor que', 'igual a'] }
-      />
-      <Input
-        placeholder=""
-        type="number"
-        onChange={ (e) => setValue(e.target.value) }
-        value={ value === '' ? '0' : value }
-        name="number"
-        id="value-filter"
-      />
+      <div>
+        <Select
+          label="Operador"
+          onChange={ (e) => setComparison(e.target.value) }
+          value={ comparison }
+          name="operator"
+          id="comparison-filter"
+          options={ ['maior que', 'menor que', 'igual a'] }
+        />
+        <Input
+          placeholder=""
+          type="number"
+          onChange={ (e) => setValue(e.target.value) }
+          value={ value === '' ? '0' : value }
+          name="number"
+          id="value-filter"
+        />
+      </div>
       <Button
         label="Filtrar"
         type="button"
@@ -59,20 +69,19 @@ export default function MenuNumeric() {
         disabled={ isNumericDisabled }
         id="button-filter"
         value=""
-        className=""
+        className={ styles.btn__filter }
         img=""
       />
       <Button
         label="REMOVER FILTROS"
         type="button"
         onClick={ () => removeAllFilters() }
-        disabled={ isNumericDisabled }
+        disabled={ false }
         id="button-remove-filters"
         value=""
-        className=""
+        className={ styles.btn__remover__filter }
         img=""
       />
-      <MenuOrder />
     </section>
     // ---------------____FILTERS
   );

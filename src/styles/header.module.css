@@ -1,0 +1,42 @@
+* { 
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Montserrat', sans-serif;
+font-weight: bold;
+}
+
+header {
+  align-items: center;
+  background-color: #13505B; 
+  background-image: url('../imagens/fundoGalaxia.jpeg');
+  box-shadow: -5px 5px 22px 10px rgba(0, 0, 0, 0.2);
+  color:white;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 20px;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 20px;
+  z-index: 100;
+}
+
+header input {  
+  border: none;
+  border-style: none;
+  font-size: 20px;
+  height: 40px;
+  width: 400px;
+}
+
+::placeholder {
+  color: red;
+  display: flex;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+input:placeholder-shown {
+  border: 1px solid rgb(68, 68, 69);
+}

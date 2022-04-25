@@ -3,14 +3,20 @@ import PropTypes from 'prop-types';
 import Context from './Context';
 import getPlanetsApi from '../services/requestApi';
 
+const fields = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [filterByName, setFilterByName] = useState({ name: '' });
   const [labels, setLabel] = useState([]);
   const [isNumericDisabled, setNumericDisabled] = useState(false);
-  const [columns, setColumns] = useState([
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-  ]);
+  const [columns, setColumns] = useState(fields);
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
   const [order, setOrder] = useState({ column: 'name', sort: 'DESC' });
   const [orderIsActive, setOrderActive] = useState(false);
@@ -56,7 +62,6 @@ function Provider({ children }) {
 
   // Remove os filtros já aplicados, ao clicar na lixeira
   const removeOneFilter = (column) => {
-    console.log(column);
     const resultFilterColumn = filterByNumericValues.filter((e) => e.column !== column);
     // devolve a opção removida ao dropDown de filtros
     setColumns((prev) => [...prev, column]);
@@ -67,7 +72,9 @@ function Provider({ children }) {
   // remove todos os filtros aplicados
   const removeAllFilters = () => {
     setFilterByNumericValues([]);
+    setColumns(fields);
     setOrderActive(false);
+    setNumericDisabled(false);
   };
 
   // salva a escolha de ordem (asc/desc) do usuário por coluna (population, etc)

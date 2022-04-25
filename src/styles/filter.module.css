@@ -1,0 +1,56 @@
+
+
+input:not(button),input, select {
+  height: 30px;
+  padding: 5px;
+}
+
+.btn__filter {
+  background-color: #97D8B2;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 40px;
+  margin: 10px;
+  width: 100px;
+  padding: 8px;
+}
+
+.btn__remover__filter {
+  background-color: #f33304;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  height: 40px;
+  margin: 10px;
+  margin: 10px;
+  padding: 8px;
+}
+
+.btn__filter:hover {
+  color:white;
+  background-color: #5c8e71;
+}
+
+.numeric__container {
+  align-items: center;
+  display: flex;
+  margin-left: 20px;
+  justify-content: left; 
+  flex-wrap: wrap;
+}
+
+.order__container {
+  align-items: baseline;
+  border-bottom: 1px solid gray;
+  display: flex;
+  justify-content:left; 
+  margin: 10px 20px;
+  flex-wrap: wrap;
+}
+
+label {
+  margin-right: 20px;
+  text-align:justify
+}

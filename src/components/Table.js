@@ -1,5 +1,13 @@
 import React, { useContext } from 'react';
 import Context from '../Context/Context';
+import styles from '../styles/planets.module.css';
+
+const compareValue = {
+  'maior que': (a, b) => Number(a) > Number(b),
+  'menor que': (a, b) => Number(a) < Number(b),
+  'igual a': (a, b) => Number(a) === Number(b),
+  default: true,
+};
 
 function Table() {
   const { labels,
@@ -11,28 +19,30 @@ function Table() {
   } = useContext(Context);
   const { name: searchName } = filterByName;
 
-  // campos usados na ordenacao de campos numericos
+  // campos usados na ordenacao
   const fieldOrder = order.column;
   const orderFilter = order.sort;
 
   function compare(a, b) {
+    // ordem ascendente
     if (orderFilter === 'ASC') {
       return (Number(a[fieldOrder]) - Number(b[fieldOrder]));
     }
+    // ordem descendente
     return (Number(b[fieldOrder]) - Number(a[fieldOrder]));
   }
 
   let dataPlanet;
   if (orderIsActive) {
     // por filtro numerico
-    // array sem os objetos com o campo unknwon
+    // array sem os campos com o valor unknwon
     const outUnknown = data.filter((e) => e[fieldOrder] !== 'unknown');
-    // Dados somente com objetos que possuem o campo unknwon
+    // Dados somente com campos de valor unknwon
     const unknowns = data.filter((e) => e[fieldOrder] === 'unknown');
-    // Coloca em ordem os numeros e une com os objetos que possuem unknowns
+    // Coloca em ordem os numeros e une com os campos que possuem unknowns
     dataPlanet = [...outUnknown.sort(compare), ...unknowns];
   } else {
-    // filtro por nome
+    // ordem ascendente por nome do planeta
     dataPlanet = data.sort((a, b) => {
       const meno1 = -1;
       if (a.name < b.name) {
@@ -42,45 +52,20 @@ function Table() {
     });
   }
 
-  // reference: https://dev.to/lukyhenson/substitua-sua-instrucao-switch-e-varios-if-and-else-usando-object-literals-pt-br-4po9
-  function filterSome(type, coluna, value) {
-    const filter = {
-      'maior que': () => Number(coluna) > Number(value),
-      'menor que': () => Number(coluna) < Number(value),
-      'igual a': () => Number(coluna) === Number(value),
-      default: true,
-    };
-    return (filter[type] || filter.default)();
-  }
-
+  // Refatorado, com ajuda do Eduardo Santos (Instrutor)
   const filterItems = (planet) => {
-    const results = filterN.map(({ column, comparison, value }) => {
-      const result = filterSome(comparison, planet[column], value);
-      return result;
-    });
-    return results.every((e) => e === true);
+    const results = filterN.every(({ column, comparison, value }) => (
+      compareValue[comparison](planet[column], value)
+    ));
+    return results;
   };
 
-  /*   const filterAll = (planet) => {
-      const results = filterN.map(({ column, comparison, value }) => {
-        if (comparison === 'maior que') {
-          return Number(planet[column]) > Number(value);
-        }
-        if (comparison === 'menor que') {
-          return Number(planet[column]) < Number(value);
-        }
-        return Number(planet[column]) === Number(value);
-      });
-      // Se passar por todos os filtros e retornar true, renderiza
-      return results.every((e) => e === true);
-    };
-   */
   const filterData = dataPlanet
     .filter((planet) => planet.name.toLowerCase().includes((searchName).toLowerCase())
       && filterItems(planet));
 
   return (
-    <table style={ { border: '1px solid black' } }>
+    <table className={ styles.table__planets }>
       <thead>
         <tr>
           { labels.map((e, index) => (
