@@ -1,19 +1,17 @@
-
-
-input:not(button),input, select {
+input, input:not( button ), select {
   height: 30px;
   padding: 5px;
 }
 
 .btn__filter {
-  background-color: #97D8B2;
+  background-color: #97d8b2;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   height: 40px;
   margin: 10px;
-  width: 100px;
   padding: 8px;
+  width: 100px;
 }
 
 .btn__remover__filter {
@@ -24,33 +22,32 @@ input:not(button),input, select {
   cursor: pointer;
   height: 40px;
   margin: 10px;
-  margin: 10px;
   padding: 8px;
 }
 
 .btn__filter:hover {
-  color:white;
   background-color: #5c8e71;
+  color: white;
 }
 
 .numeric__container {
   align-items: center;
   display: flex;
-  margin-left: 20px;
-  justify-content: left; 
   flex-wrap: wrap;
+  justify-content: left;
+  margin-left: 20px;
 }
 
 .order__container {
   align-items: baseline;
   border-bottom: 1px solid gray;
   display: flex;
-  justify-content:left; 
-  margin: 10px 20px;
   flex-wrap: wrap;
+  justify-content: left;
+  margin: 10px 20px;
 }
 
 label {
   margin-right: 20px;
-  text-align:justify
+  text-align: justify;
 }
